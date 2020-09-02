@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:movie_app/src/providers/movies_provider.dart';
 
 import 'package:movie_app/src/widgets/card_swiper_widget.dart';
+import 'package:movie_app/src/widgets/movie_horizontal.dart';
 
 class HomePage extends StatelessWidget {
   final moviesProvider = new MovieProvider();
@@ -19,15 +20,17 @@ class HomePage extends StatelessWidget {
         body: SafeArea(
             child: Container(
           child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
               _swiperTarjets(),
+              _footer(context),
             ],
           ),
         )));
   }
 
-// SWIPER for tarjets.
-// Need instalation => pubspec.yaml => dependencies: flutter_swiper
+  // SWIPER for tarjets.
+  // Need instalation => pubspec.yaml => dependencies: flutter_swiper
   Widget _swiperTarjets() {
     return FutureBuilder(
       future: moviesProvider.getOnCinema(),
@@ -41,6 +44,30 @@ class HomePage extends StatelessWidget {
               height: 100.0, child: Center(child: CircularProgressIndicator()));
         }
       },
+    );
+  }
+
+  Widget _footer(BuildContext context) {
+    return Container(
+      width: double.infinity,
+      child: Column(
+        children: [
+          Text(
+            'Populars!',
+            style: Theme.of(context).textTheme.subtitle1,
+          ),
+          FutureBuilder(
+            future: moviesProvider.getMostPopulars(),
+            builder: (BuildContext context, AsyncSnapshot<List> snapshot) {
+              if (snapshot.hasData) {
+                return MovieHorizontal(movies: snapshot.data);
+              } else {
+                return CircularProgressIndicator();
+              }
+            },
+          ),
+        ],
+      ),
     );
   }
 }
