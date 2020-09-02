@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+
+import 'package:movie_app/src/models/movies_model.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
 
 class CardSwiper extends StatelessWidget {
-  final List<dynamic> movies;
+  final List<Movie> movies;
 
   const CardSwiper({@required this.movies});
 
@@ -22,8 +24,10 @@ class CardSwiper extends StatelessWidget {
               itemBuilder: (BuildContext context, int index) {
                 return ClipRRect(
                   borderRadius: BorderRadius.circular(10.0),
-                  child: Image.network('http://via.placeholder.com/350x150',
-                      fit: BoxFit.fill),
+                  child: FadeInImage(
+                      placeholder: AssetImage('assets/loadings/spinner.gif'),
+                      image: NetworkImage(movies[index].getPosterImg()),
+                      fit: BoxFit.cover),
                 );
               },
               // Only to see tree points like there are more images

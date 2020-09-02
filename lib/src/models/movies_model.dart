@@ -1,5 +1,5 @@
 class Movies {
-  List<Result> items = new List();
+  List<Movie> items = new List();
 
   Movies();
 
@@ -7,13 +7,13 @@ class Movies {
     if (jsonList == null) return;
 
     for (var item in jsonList) {
-      final movie = new Result.fromJsonMap(item);
+      final movie = new Movie.fromJsonMap(item);
       items.add(movie);
     }
   }
 }
 
-class Result {
+class Movie {
   double popularity;
   int voteCount;
   bool video;
@@ -29,7 +29,7 @@ class Result {
   String overview;
   String releaseDate;
 
-  Result({
+  Movie({
     this.popularity,
     this.voteCount,
     this.video,
@@ -46,7 +46,7 @@ class Result {
     this.releaseDate,
   });
 
-  Result.fromJsonMap(Map<String, dynamic> json) {
+  Movie.fromJsonMap(Map<String, dynamic> json) {
     popularity = json['popularity'] / 1;
     voteCount = json['vote_count'];
     video = json['video'];
@@ -61,5 +61,13 @@ class Result {
     voteAverage = json['vote_average'] / 1;
     overview = json['overview'];
     releaseDate = json['release_date'];
+  }
+
+  getPosterImg() {
+    if (posterPath == null) {
+      return 'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQwR31HeEDfrHDKRqOyKahOhSeSml9iTQLQFg&usqp=CAU';
+    } else {
+      return 'https://image.tmdb.org/t/p/w500$posterPath';
+    }
   }
 }
