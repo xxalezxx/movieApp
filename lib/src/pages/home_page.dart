@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:movie_app/src/providers/movies_provider.dart';
+import 'package:movie_app/src/search/search_delegate.dart';
 
 import 'package:movie_app/src/widgets/card_swiper_widget.dart';
 import 'package:movie_app/src/widgets/movie_horizontal.dart';
@@ -15,7 +16,16 @@ class HomePage extends StatelessWidget {
           centerTitle: false,
           title: Text('Movies in the cinema'),
           backgroundColor: Colors.indigoAccent,
-          actions: [IconButton(icon: Icon(Icons.search), onPressed: () {})],
+          actions: [
+            IconButton(
+                icon: Icon(Icons.search),
+                onPressed: () {
+                  showSearch(
+                      // can use query as string
+                      context: context,
+                      delegate: DataSearch());
+                })
+          ],
         ),
         // The SafeArea is to avoid the NOTCH in the newest cell-phones!
         body: SafeArea(

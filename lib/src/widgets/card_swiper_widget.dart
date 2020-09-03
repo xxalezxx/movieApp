@@ -22,12 +22,24 @@ class CardSwiper extends StatelessWidget {
               itemHeight: _screenSize.height * 0.5,
               itemCount: movies.length,
               itemBuilder: (BuildContext context, int index) {
-                return ClipRRect(
-                  borderRadius: BorderRadius.circular(10.0),
-                  child: FadeInImage(
-                      placeholder: AssetImage('assets/loadings/spinner.gif'),
-                      image: NetworkImage(movies[index].getPosterImg()),
-                      fit: BoxFit.cover),
+                movies[index].uniqueId = '${movies[index].id}-card';
+
+                return Hero(
+                  tag: movies[index].uniqueId,
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(10.0),
+                    child: GestureDetector(
+                      onTap: () {
+                        Navigator.pushNamed(context, 'details',
+                            arguments: movies[index]);
+                      },
+                      child: FadeInImage(
+                          placeholder:
+                              AssetImage('assets/loadings/spinner.gif'),
+                          image: NetworkImage(movies[index].getPosterImg()),
+                          fit: BoxFit.cover),
+                    ),
+                  ),
                 );
               },
               // Only to see tree points like there are more images
