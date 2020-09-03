@@ -70,4 +70,12 @@ class Movie {
       return 'https://image.tmdb.org/t/p/w500$posterPath';
     }
   }
+
+  getBackgroundImg() {
+    if (backdropPath == null) {
+      return 'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQwR31HeEDfrHDKRqOyKahOhSeSml9iTQLQFg&usqp=CAU';
+    } else {
+      return 'https://image.tmdb.org/t/p/w500${posterPath}';
+    }
+  }
 }
